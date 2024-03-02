@@ -63,96 +63,7 @@ void Application::run()
 	// bind data to vbo
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verticies), verticies, GL_STATIC_DRAW);
 
-
-	// --------------- CREATE SHADERS -------------------
-	std::string vertSource;
-	std::string fragSource;
-	//read shader files and save to buffers
-	try {
-		std::ifstream vertStream;
-		std::ifstream fragStream;
-		std::stringstream vertBuffer;
-		std::stringstream fragBuffer;
-
-
-		vertStream.open("resources/shaders/shader.vs");
-		fragStream.open("resources/shaders/shader.fs");
-
-		vertBuffer << vertStream.rdbuf();
-		fragBuffer << fragStream.rdbuf();
-
-		vertSource = vertBuffer.str();
-		fragSource = fragBuffer.str();
-
-		vertStream.close();
-		fragStream.close();
-	}
-	catch (const std::ifstream::failure& e) {
-		std::cout << "Exception thrown when reading shader source files";
-		throw e;
-	}
-
-
-	unsigned int vertShader;
-	const char* vertCString = vertSource.c_str();
-
-	vertShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertShader, 1, &vertCString, NULL);
-	glCompileShader(vertShader);
-
-	int success = 0;
-
-	glGetShaderiv(vertShader, GL_COMPILE_STATUS, &success);
-
-	if (!success) {
-
-		// The maxLength includes the NULL character
-		char infoLog[512];
-		glGetShaderInfoLog(vertShader, 512, NULL, infoLog);
-
-
-		std::cout << "Error occured when compiling vertShader: " << infoLog << std::endl;
-		throw std::runtime_error("Failed to compile vertShader");
-	}
-
-
-
-	unsigned int fragShader;
-	const char* fragCString = fragSource.c_str();
-	
-	fragShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragShader, 1, &fragCString, NULL);
-	glCompileShader(fragShader);
-
-	success = 0;
-
-	glGetShaderiv(fragShader, GL_COMPILE_STATUS, &success);
-
-	if (!success) {
-
-		// The maxLength includes the NULL character
-		char infoLog[512];
-		glGetShaderInfoLog(fragShader, 512, NULL, infoLog);
-
-
-		std::cout << "Error occured when compiling fragShader: " << infoLog << std::endl;
-		throw std::runtime_error("Failed to compile fragShader");
-	}
-
-
-
-	// ---------------- CREATE SHADER PROGRAM ----------------
-	unsigned int shaderProgram;
-
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertShader);
-	glAttachShader(shaderProgram, fragShader);
-	glLinkProgram(shaderProgram);
-	glUseProgram(shaderProgram);
-
-
-	glDeleteShader(vertShader);
-	glDeleteShader(fragShader);
+	Shader shader("resources/shaders/shader.vs", "resources/shaders/shader.fs");
 	
 	// -------------------- LINK VERTEX ATTRIB POINTERS
 	// params (index, size, type, normalized, stride, pointer)
@@ -174,7 +85,7 @@ void Application::run()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glUseProgram(shaderProgram);
+		shader.useProgram();
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
