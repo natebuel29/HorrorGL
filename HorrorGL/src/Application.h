@@ -2,7 +2,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <fstream>
+#include <sstream>
+#include <string>
 #include <iostream>
+#include <vector>
 
 class Application
 {

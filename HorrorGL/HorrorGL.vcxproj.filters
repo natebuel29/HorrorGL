@@ -30,4 +30,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\shaders\shader.vs" />
+    <None Include="resources\shaders\shader.fs" />
+  </ItemGroup>
 </Project>
