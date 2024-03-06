@@ -45,14 +45,15 @@ void Application::init()
 void Application::run()
 {
 	float verticies[] = {
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f, 0.5f, 0.0f,
+		// position			// colors
+		-0.5f, -0.5f, 0.0f,	1.0f, 0.0f, 0.0f,
+		0.5f, -0.5f, 0.0f,	0.0f, 1.0f, 0.0f,
+		0.0f, 0.5f, 0.0f,	0.0f, 0.0f, 1.0f,
 	};
 
 	//Create vertex array object
 	unsigned int VAO;
-	glGenVertexArrays(1,&VAO);
+	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
 	// Create vertex buffer object for verticie data
@@ -64,13 +65,14 @@ void Application::run()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verticies), verticies, GL_STATIC_DRAW);
 
 	Shader shader("resources/shaders/shader.vs", "resources/shaders/shader.fs");
-	
+
 	// -------------------- LINK VERTEX ATTRIB POINTERS
 	// params (index, size, type, normalized, stride, pointer)
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	// render loop
 // -----------
@@ -86,6 +88,13 @@ void Application::run()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shader.useProgram();
+
+		//apply rotation to triangle
+		glm::mat4 transform = glm::mat4(1.0f);
+		transform = glm::rotate(transform, glm::radians(60.0f * ((float)glfwGetTime())), glm::vec3(0.0f, 1.0f, 0.0f));
+
+		shader.setMat4("transform", transform);
+
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
