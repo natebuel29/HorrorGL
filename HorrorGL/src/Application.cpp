@@ -93,7 +93,22 @@ void Application::run()
 		glm::mat4 transform = glm::mat4(1.0f);
 		transform = glm::rotate(transform, glm::radians(60.0f * ((float)glfwGetTime())), glm::vec3(0.0f, 1.0f, 0.0f));
 
-		shader.setMat4("transform", transform);
+
+		/*NOTE: ran into a bug where i didn't use a view matrix and couldn't see triangle
+		 this was because the "camera" and triangle were both centered at 0.
+		 had to either translate the triangle in the -z direction
+		or create a view matrix*/
+		// create view (camera)
+		glm::mat4 view = glm::mat4(1.0f);
+		//translate the scene in the reverse direction of where we want to move
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+		glm::mat4 proj = glm::perspective(glm::radians(45.0f), ((float)m_Width) / ((float)m_Height), 0.1f, 100.0f);
+
+		shader.setMat4("model", transform);
+		shader.setMat4("view", view);
+		shader.setMat4("projection", proj);
+
 
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
