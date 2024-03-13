@@ -6,7 +6,8 @@ float pitch = 0.0f;
 float yaw = -90.0f;
 bool firstMouse = true;
 
-void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, -90.0f, 2.5f, 0.1f);
+
 
 Application::Application(const char* appName, uint32_t width, uint32_t height)
 {
@@ -51,17 +52,7 @@ Application::Application(const char* appName, uint32_t width, uint32_t height)
 			lastX = xpos;
 			lastY = ypos;
 
-			const float sensitivity = 0.1f;
-			xoffset *= sensitivity;
-			yoffset *= sensitivity;
-
-			yaw += xoffset;
-			pitch += yoffset;
-
-			if (pitch > 89.0f)
-				pitch = 89.0f;
-			if (pitch < -89.0f)
-				pitch = -89.0f;
+			camera.updateCameraRotation(xoffset, yoffset);
 		});
 
 
@@ -136,21 +127,8 @@ void Application::run()
 		glm::mat4 transform = glm::mat4(1.0f);
 		transform = glm::rotate(transform, glm::radians(60.0f * ((float)glfwGetTime())), glm::vec3(0.0f, 1.0f, 0.0f));
 
-		// read this
-	//	glm::vec3 cameraDirection = glm::normalize(cameraPos - glm::vec3(0.0f, 0.0f, 0.0f));
-		//glm::vec3 cameraRight = glm::normalize(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), cameraDirection));
-		//glm::vec3 cameraUp = glm::normalize(glm::cross(cameraDirection, cameraRight));
-
-		glm::vec3 direction;
-		direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-		direction.y = sin(glm::radians(pitch));
-		direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-		m_CameraFront = glm::normalize(direction);
-
 		glm::mat4 view;
-		view = glm::lookAt(m_CameraPos,
-			m_CameraPos + m_CameraFront,
-			m_CameraUp);
+		view = camera.getViewMatrix();
 
 		/*NOTE: ran into a bug where i didn't use a view matrix and couldn't see triangle
 		 this was because the "camera" and triangle were both centered at 0.
@@ -190,6 +168,7 @@ void Application::cleanup()
 
 void Application::processInput()
 {
+	glm::vec3 direction(0.0f, 0.0f, 0.0f);
 	float adjustedSpeed = m_CameraSpeed * m_deltaTime;
 	if (glfwGetKey(m_Window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
@@ -198,22 +177,22 @@ void Application::processInput()
 	}
 	if (glfwGetKey(m_Window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		m_CameraPos += m_CameraFront * adjustedSpeed;
-
+		camera.moveCamera(FORWARD, m_deltaTime);
 	}
 	if (glfwGetKey(m_Window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		m_CameraPos -= m_CameraFront * adjustedSpeed;
+		camera.moveCamera(BACKWARD, m_deltaTime);
+
 	}
 	if (glfwGetKey(m_Window, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		m_CameraPos += glm::normalize(glm::cross(m_CameraFront, m_CameraUp)) * adjustedSpeed;
+		camera.moveCamera(RIGHT, m_deltaTime);
+
 	}
 	if (glfwGetKey(m_Window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		m_CameraPos -= glm::normalize(glm::cross(m_CameraFront, m_CameraUp)) * adjustedSpeed;
+		camera.moveCamera(LEFT, m_deltaTime);
 	}
-}
 
-void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
+
 }
