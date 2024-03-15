@@ -78,6 +78,15 @@ void Application::run()
 		-0.5f, -0.5f, 0.0f,	1.0f, 0.0f, 0.0f,
 		0.5f, -0.5f, 0.0f,	0.0f, 1.0f, 0.0f,
 		0.0f, 0.5f, 0.0f,	0.0f, 0.0f, 1.0f,
+		// position			// colors
+		-20.0f, 0.0f, -20.0f,	0.2f, 0.2f, 0.2f,
+		20.0f, 0.0f, -20.0f,	0.2f, 0.2f, 0.2f,
+		-20.0f, 0.0f, 20.0f,	0.2f, 0.2f, 0.2f,
+		
+		-20.0f, 0.0f, 20.0f,	0.2f, 0.2f, 0.2f,
+		20.0f, 0.0f, 20.0f,		0.2f, 0.2f, 0.2f,
+		20.0f, 0.0f, -20.0f,	0.2f, 0.2f, 0.2f,
+
 	};
 
 	//Create vertex array object
@@ -103,6 +112,8 @@ void Application::run()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
+	glEnable(GL_DEPTH_TEST);
+
 	// render loop
 // -----------
 	while (m_Running)
@@ -119,7 +130,7 @@ void Application::run()
 		// render
 		// ------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		shader.useProgram();
 
@@ -148,6 +159,14 @@ void Application::run()
 
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		//apply rotation to triangle
+		 transform = glm::mat4(1.0f);
+		 transform = glm::translate(transform, glm::vec3(0.0f, -0.52f, 0.0f));
+		 shader.setMat4("model", transform);
+		 glDrawArrays(GL_TRIANGLES, 3, 9);
+
+		//transform = glm::rotate(transform, glm::radians(60.0f * ((float)glfwGetTime())), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------

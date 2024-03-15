@@ -6,6 +6,7 @@
 
 #include "Shader.h"
 #include "Camera.h"
+#include "Model.h"
 
 #include <fstream>
 #include <sstream>
