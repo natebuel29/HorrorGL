@@ -97,6 +97,11 @@ void Shader::setMat4(const char* uniform, glm::mat4& target)
 	glUniformMatrix4fv(glGetUniformLocation(m_ShaderProgram, uniform), 1, GL_FALSE, glm::value_ptr(target));
 }
 
+void Shader::setInt(const char* uniform, int target)
+{
+	glUniform1i(glGetUniformLocation(m_ShaderProgram, uniform), target); // set it manually
+}
+
 void Shader::useProgram() {
 	glUseProgram(m_ShaderProgram);
 }

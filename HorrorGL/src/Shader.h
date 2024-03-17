@@ -15,6 +15,7 @@ class Shader
 	public:
 		Shader(const char* pathToVert, const char* pathToFrag);
 		void setMat4(const char* uniform, glm::mat4& target);
+		void setInt(const char* uniform, int target);
 		unsigned int getProgramID();
 		void useProgram();
 	private:

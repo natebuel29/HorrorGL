@@ -1,0 +1,50 @@
+# Blender 3.4.1 MTL File: 'None'
+# www.blender.org
+
+newmtl branches
+Ns 319.999939
+Ka 0.930000 0.930000 0.930000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd  C:\Users\nateb\Downloads\trees\textures\branch1Color.png
+map_KsC:\Users\nateb\Downloads\trees\textures\branch1Specular.png
+map_refl C:\Users\nateb\Downloads\trees\textures\branch1Specular.png
+map_Bump   C:\Users\nateb\Downloads\trees\textures\branch1Normal.png
+
+newmtl tree1
+Ns 319.999939
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:\Users\nateb\Downloads\trees\textures\tree1COlor.png
+map_Ks C:\Users\nateb\Downloads\trees\textures\tree1Specular.png
+map_refl  C:\Users\nateb\Downloads\trees\textures\tree1Specular.png
+map_Bump  C:\Users\nateb\Downloads\trees\textures\tree1Normal.png
+
+newmtl tree2
+Ns 319.999939
+Ka 0.920000 0.920000 0.920000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd  C:\Users\nateb\Downloads\trees\textures\tree2Color.png
+map_Ks  C:\Users\nateb\Downloads\trees\textures\tree2Specular.png
+map_refl  C:\Users\nateb\Downloads\trees\textures\tree2Specular.png
+map_Bump  C:\Users\nateb\Downloads\trees\textures\tree2Normal.png
+
+newmtl tree3
+Ns 319.999939
+Ka 0.960000 0.960000 0.960000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:\Users\nateb\Downloads\trees\textures\tree3Color.png
+map_Ks  C:\Users\nateb\Downloads\trees\textures\tree3Specular.png
+map_refl C:\Users\nateb\Downloads\trees\textures\tree3Specular.png
+map_Bump C:\Users\nateb\Downloads\trees\textures\tree3Normal.png

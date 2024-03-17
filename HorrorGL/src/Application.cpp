@@ -74,19 +74,19 @@ void Application::init()
 void Application::run()
 {
 	float verticies[] = {
+		// position			// colors			//texture coords
+		-0.5f, -0.5f, 0.0f,	1.0f, 0.0f, 0.0f,	-1.0f, 0.0f,
+		0.5f, -0.5f, 0.0f,	0.0f, 1.0f, 0.0f,	-1.0f, 0.0f,
+		0.0f, 0.5f, 0.0f,	0.0f, 0.0f, 1.0f,	-1.0f, 0.0f,
 		// position			// colors
-		-0.5f, -0.5f, 0.0f,	1.0f, 0.0f, 0.0f,
-		0.5f, -0.5f, 0.0f,	0.0f, 1.0f, 0.0f,
-		0.0f, 0.5f, 0.0f,	0.0f, 0.0f, 1.0f,
-		// position			// colors
-		-20.0f, 0.0f, -20.0f,	0.2f, 0.2f, 0.2f,
-		20.0f, 0.0f, -20.0f,	0.2f, 0.2f, 0.2f,
-		-20.0f, 0.0f, 20.0f,	0.2f, 0.2f, 0.2f,
-		
-		-20.0f, 0.0f, 20.0f,	0.2f, 0.2f, 0.2f,
-		20.0f, 0.0f, 20.0f,		0.2f, 0.2f, 0.2f,
-		20.0f, 0.0f, -20.0f,	0.2f, 0.2f, 0.2f,
-
+		-20.0f, 0.0f, -20.0f,	0.2f, 0.2f, 0.2f,	0.0f, 0.0f,
+		20.0f, 0.0f, -20.0f,	0.2f, 0.2f, 0.2f,	10.0f, 0.0f,
+		-20.0f, 0.0f, 20.0f,	0.2f, 0.2f, 0.2f,	0.0f, 10.0f,
+															   
+		-20.0f, 0.0f, 20.0f,	0.2f, 0.2f, 0.2f,	0.0f, 10.0f,
+		20.0f, 0.0f, 20.0f,		0.2f, 0.2f, 0.2f,	10.0f, 10.0f,
+		20.0f, 0.0f, -20.0f,	0.2f, 0.2f, 0.2f,	10.0f, 0.0f,
+														
 	};
 
 	//Create vertex array object
@@ -104,15 +104,27 @@ void Application::run()
 
 	Shader shader("resources/shaders/shader.vs", "resources/shaders/shader.fs");
 
+	//stbi_set_flip_vertically_on_load(true);
+
+	//Model ourModel("resources/models/trees.obj");
+
+
 	// -------------------- LINK VERTEX ATTRIB POINTERS
 	// params (index, size, type, normalized, stride, pointer)
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
+
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+
+
 	glEnable(GL_DEPTH_TEST);
+
+	unsigned int texture = GetTextureFromFile("resources/textures/Dirt_02.png", "test", false);
 
 	// render loop
 // -----------
@@ -152,21 +164,25 @@ void Application::run()
 
 		glm::mat4 proj = glm::perspective(glm::radians(45.0f), ((float)m_Width) / ((float)m_Height), 0.1f, 100.0f);
 
-		shader.setMat4("model", transform);
+		// render the loaded model
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, glm::radians(60.0f * ((float)glfwGetTime())), glm::vec3(0.0f, 1.0f, 0.0f));
+		shader.setMat4("model", model);
+
+		//shader.setMat4("model", transform);
 		shader.setMat4("view", view);
-		shader.setMat4("projection", proj);
+		shader.setMat4("projection", proj);  
 
-
+		glBindTexture(GL_TEXTURE_2D, texture);
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		//apply rotation to triangle
-		 transform = glm::mat4(1.0f);
-		 transform = glm::translate(transform, glm::vec3(0.0f, -0.52f, 0.0f));
-		 shader.setMat4("model", transform);
-		 glDrawArrays(GL_TRIANGLES, 3, 9);
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -0.52f, 0.0f));
+		shader.setMat4("model", model);
+		glDrawArrays(GL_TRIANGLES, 3, 9);
 
-		//transform = glm::rotate(transform, glm::radians(60.0f * ((float)glfwGetTime())), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
