@@ -18,6 +18,7 @@ enum CameraMoveDirection
 class Camera
 {
 public:
+	Camera() {};
 	Camera(glm::vec3 camPos, glm::vec3 worldUp, float pitch, float yaw, float cameraSpeed, float cameraSensitivity);
 
 	void moveCamera(CameraMoveDirection direction, float deltaTime);

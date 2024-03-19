@@ -45,7 +45,6 @@ void Camera::updateCameraRotation(float xOffset, float yOffset)
 	xOffset *= m_CameraSensitivity;
 	yOffset *= m_CameraSensitivity;
 
-
 	m_Yaw += xOffset;
 	m_Pitch += yOffset;
 
@@ -56,6 +55,7 @@ void Camera::updateCameraRotation(float xOffset, float yOffset)
 	else if (m_Pitch < -90.0f) {
 		m_Pitch = -90.0f;
 	}
+
 
 	updateCameraVectors();
 }

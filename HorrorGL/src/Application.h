@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "Shader.h"
+#include "Renderer.h"
 #include "Camera.h"
 #include "Model.h"
 
@@ -21,6 +22,7 @@ public:
 	void run();
 	void cleanup();
 	void processInput();
+	Camera m_Camera;
 
 private:
 	uint32_t m_Width;
@@ -31,6 +33,7 @@ private:
 	float m_deltaTime = 0.0f;	// Time between current frame and last frame
 	float m_LastFrame = 0.0f; // Time of last frame
 	const float m_CameraSpeed = 2.5f; // adjust accordingly
+	Renderer m_Renderer;
 
 	glm::vec3 m_CameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 	glm::vec3 m_CameraFront = glm::vec3(0.0f, 0.0f, -1.0f);

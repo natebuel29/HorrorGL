@@ -13,6 +13,7 @@
 class Shader
 {
 	public:
+		Shader() {};
 		Shader(const char* pathToVert, const char* pathToFrag);
 		void setMat4(const char* uniform, glm::mat4& target);
 		void setInt(const char* uniform, int target);
