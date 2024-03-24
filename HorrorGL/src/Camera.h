@@ -24,6 +24,7 @@ public:
 	void moveCamera(CameraMoveDirection direction, float deltaTime);
 	void updateCameraRotation(float xOffset, float yOffset);
 	glm::mat4 getViewMatrix();
+	glm::vec3 getCameraPos();
 
 private:
 	glm::vec3 m_CameraPos;

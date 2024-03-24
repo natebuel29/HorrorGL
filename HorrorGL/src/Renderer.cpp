@@ -4,70 +4,66 @@ void Renderer::init(int width, int height)
 {
 	m_Camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, -90.0f, 2.5f, 0.1f);
 
-	float verticies[] = {
-		// position			// colors			//texture coords
-		-0.5f, -0.5f, 0.0f,	1.0f, 0.0f, 0.0f,	-1.0f, 0.0f,
-		0.5f, -0.5f, 0.0f,	0.0f, 1.0f, 0.0f,	-1.0f, 0.0f,
-		0.0f, 0.5f, 0.0f,	0.0f, 0.0f, 1.0f,	-1.0f, 0.0f,
-		// position			// colors
-		-20.0f, 0.0f, -20.0f,	0.2f, 0.2f, 0.2f,	0.0f, 0.0f,
-		20.0f, 0.0f, -20.0f,	0.2f, 0.2f, 0.2f,	10.0f, 0.0f,
-		-20.0f, 0.0f, 20.0f,	0.2f, 0.2f, 0.2f,	0.0f, 10.0f,
 
-		-20.0f, 0.0f, 20.0f,	0.2f, 0.2f, 0.2f,	0.0f, 10.0f,
-		20.0f, 0.0f, 20.0f,		0.2f, 0.2f, 0.2f,	10.0f, 10.0f,
-		20.0f, 0.0f, -20.0f,	0.2f, 0.2f, 0.2f,	10.0f, 0.0f,
+	float planeVerticies[] = {
+		// position				//TEXTURE COORDS
+		-20.0f, 0.0f, -20.0f,	0.0f, 0.0f,
+		20.0f, 0.0f, -20.0f,	10.0f, 0.0f,
+		-20.0f, 0.0f, 20.0f,	0.0f, 10.0f,
+
+		-20.0f, 0.0f, 20.0f,	0.0f, 10.0f,
+		20.0f, 0.0f, 20.0f,		10.0f, 10.0f,
+		20.0f, 0.0f, -20.0f,	10.0f, 0.0f,
 	};
 
-	float lightSourceVerticies[] = {
-		-0.5f, -0.5f, -0.5f,
-		 0.5f, -0.5f, -0.5f,
-		 0.5f,  0.5f, -0.5f,
-		 0.5f,  0.5f, -0.5f,
-		-0.5f,  0.5f, -0.5f,
-		-0.5f, -0.5f, -0.5f,
+	float cubeVerticies[] = {
+		 -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		  0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		  0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		  0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		 -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		 -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-		-0.5f, -0.5f,  0.5f,
-		 0.5f, -0.5f,  0.5f,
-		 0.5f,  0.5f,  0.5f,
-		 0.5f,  0.5f,  0.5f,
-		-0.5f,  0.5f,  0.5f,
-		-0.5f, -0.5f,  0.5f,
+		 -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		  0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		  0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		  0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		 -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		 -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
 
-		-0.5f,  0.5f,  0.5f,
-		-0.5f,  0.5f, -0.5f,
-		-0.5f, -0.5f, -0.5f,
-		-0.5f, -0.5f, -0.5f,
-		-0.5f, -0.5f,  0.5f,
-		-0.5f,  0.5f,  0.5f,
+		 -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+		 -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+		 -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+		 -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+		 -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+		 -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
-		 0.5f,  0.5f,  0.5f,
-		 0.5f,  0.5f, -0.5f,
-		 0.5f, -0.5f, -0.5f,
-		 0.5f, -0.5f, -0.5f,
-		 0.5f, -0.5f,  0.5f,
-		 0.5f,  0.5f,  0.5f,
+		  0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+		  0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+		  0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+		  0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+		  0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+		  0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
-		-0.5f, -0.5f, -0.5f,
-		 0.5f, -0.5f, -0.5f,
-		 0.5f, -0.5f,  0.5f,
-		 0.5f, -0.5f,  0.5f,
-		-0.5f, -0.5f,  0.5f,
-		-0.5f, -0.5f, -0.5f,
+		 -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+		  0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+		  0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+		  0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+		 -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+		 -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
-		-0.5f,  0.5f, -0.5f,
-		 0.5f,  0.5f, -0.5f,
-		 0.5f,  0.5f,  0.5f,
-		 0.5f,  0.5f,  0.5f,
-		-0.5f,  0.5f,  0.5f,
-		-0.5f,  0.5f, -0.5f,
-	
-	
+		 -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+		  0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+		  0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+		  0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+		 -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+		 -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 	};
 
 
 	shader = Shader("resources/shaders/shader.vs", "resources/shaders/shader.fs");
 	lightSourceShader = Shader("resources/shaders/lightSourceShader.vs", "resources/shaders/lightSourceShader.fs");
+	planeShader = Shader("resources/shaders/planeShader.vs", "resources/shaders/planeShader.fs");
 
 	//stbi_set_flip_vertically_on_load(true);
 
@@ -75,7 +71,6 @@ void Renderer::init(int width, int height)
 
 	m_Width = width;
 	m_Height = height;
-
 
 	//-------------------- Normal VAO Setup ----------------------
 	//Create vertex array object
@@ -87,22 +82,18 @@ void Renderer::init(int width, int height)
 	glBindBuffer(GL_ARRAY_BUFFER, glContext.VBO);
 
 	// bind data to vbo
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticies), verticies, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVerticies), cubeVerticies, GL_STATIC_DRAW);
 
 	// -------------------- LINK VERTEX ATTRIB POINTERS
 	// params (index, size, type, normalized, stride, pointer)
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
 
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-
-
-	//-------------------- Light Source VAO Setup ----------------------
+	//-------------------- Normal VAO Setup ----------------------
 	//Create vertex array object
 	glGenVertexArrays(1, &glContext.lightSourceVAO);
 	glBindVertexArray(glContext.lightSourceVAO);
@@ -111,12 +102,35 @@ void Renderer::init(int width, int height)
 	glGenBuffers(1, &glContext.lightSourceVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, glContext.lightSourceVBO);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(lightSourceVerticies), lightSourceVerticies, GL_STATIC_DRAW);
+	// bind data to vbo
+	glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVerticies), cubeVerticies, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	// -------------------- LINK VERTEX ATTRIB POINTERS
+	// params (index, size, type, normalized, stride, pointer)
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
+
+
+	//-------------------- plane VAO Setup ----------------------
+	//Create vertex array object
+	glGenVertexArrays(1, &glContext.planeVAO);
+	glBindVertexArray(glContext.planeVAO);
+
+	// Create vertex buffer object for verticie data
+	glGenBuffers(1, &glContext.planeVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, glContext.planeVBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(planeVerticies), planeVerticies, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3*sizeof(float)));
+	glEnableVertexAttribArray(1);
+
 	glEnable(GL_DEPTH_TEST);
+
 
 	glContext.dirtTextureID = GetTextureFromFile("resources/textures/dirt.png", "test", false);
 
@@ -130,6 +144,7 @@ void Renderer::onUpdate()
 	glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::mat4 view;
 	view = m_Camera.getViewMatrix();
+	glm::vec3 camPos = m_Camera.getCameraPos();
 	glm::mat4 proj = glm::perspective(glm::radians(45.0f), ((float)800) / ((float)600), 0.1f, 100.0f);
 
 	
@@ -157,16 +172,6 @@ void Renderer::onUpdate()
 	glm::mat4 transform = glm::mat4(1.0f);
 	transform = glm::rotate(transform, glm::radians(60.0f * ((float)glfwGetTime())), glm::vec3(0.0f, 1.0f, 0.0f));
 
-	/*NOTE: ran into a bug where i didn't use a view matrix and couldn't see triangle
-	 this was because the "camera" and triangle were both centered at 0.
-	 had to eithers translate the triangle in the -z direction
-	or create a view matrix*/
-	// create view (camera)
-	//glm::mat4 view = glm::mat4(1.0f);
-	//translate the scene in the reverse direction of where we want to move
-	//view = glm::translate(view, glm::vec3(x, 0.0f, z));
-
-
 	// render the loaded model
 	model = glm::mat4(1.0f);
 	model = glm::rotate(model, glm::radians(60.0f * ((float)glfwGetTime())), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -175,18 +180,35 @@ void Renderer::onUpdate()
 	//shader.setMat4("model", transform);
 	shader.setMat4("view", view);
 	shader.setMat4("projection", proj);
+	glm::vec3 cubeColor(0.5f, 0.2f, 1.0f);
+	shader.setVec3("objectColor", cubeColor);
 	shader.setVec3("lightColor",lightColor);
-
-
-	glBindTexture(GL_TEXTURE_2D, glContext.dirtTextureID);
+	shader.setVec3("lightPos", lightPos);
+	shader.setVec3("viewPos", camPos);
+	shader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+	shader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+	shader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+	shader.setFloat("material.shininess", 32.0f);
 	glBindVertexArray(glContext.VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
 
-	//apply rotation to triangle
+	planeShader.useProgram();
+	glBindVertexArray(glContext.planeVAO);
+	glBindTexture(GL_TEXTURE_2D, glContext.dirtTextureID);
+
+	planeShader.setMat4("view", view);
+	planeShader.setMat4("projection", proj);
+	planeShader.setVec3("lightColor", lightColor);
+	planeShader.setVec3("lightPos", lightPos);
+	planeShader.setVec3("viewPos", camPos);
+	planeShader.setVec3("material.ambient", 0.1f, 0.1f, 0.1f);
+	planeShader.setVec3("material.diffuse", 1.0f, 1.0f, 1.0f);
+	planeShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+	planeShader.setFloat("material.shininess", 32.0f);
 	model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(0.0f, -0.52f, 0.0f));
 	shader.setMat4("model", model);
-	glDrawArrays(GL_TRIANGLES, 3, 9);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
 void Renderer::updateViewport(int width, int height)

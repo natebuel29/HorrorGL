@@ -1,7 +1,5 @@
 #version 450 core
 
-out vec4 FragColor;
-
 struct Material {
     vec3 ambient;
     vec3 diffuse;
@@ -11,18 +9,21 @@ struct Material {
   
 uniform Material material;
 
-in vec3 Normal;  
+in vec2 TexCoord;
 in vec3 FragPos;  
-  
-uniform vec3 lightPos; 
+in vec3 Normal;
+
+out vec4 FragColor;
+
+uniform sampler2D planeTexture;
+
 uniform vec3 lightColor;
-uniform vec3 objectColor;
+uniform vec3 lightPos; 
 uniform vec3 viewPos;
 
 
 void main()
 {
-    // ambient
     float ambientStrength = 0.1;
     vec3 ambient = material.ambient * lightColor;
   	
@@ -38,7 +39,7 @@ void main()
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     vec3 specular = lightColor * (spec * material.specular); 
 
+
             
-    vec3 result = (ambient + diffuse + specular) * objectColor;
-    FragColor = vec4(result, 1.0);
+    FragColor = vec4((ambient + diffuse + specular),1.0) *  texture(planeTexture, TexCoord);
 } 

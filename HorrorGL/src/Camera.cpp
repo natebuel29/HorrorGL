@@ -70,6 +70,11 @@ glm::mat4 Camera::getViewMatrix()
 	return view;
 }
 
+glm::vec3 Camera::getCameraPos()
+{
+	return m_CameraPos;
+}
+
 void Camera::updateCameraVectors()
 {
 	glm::vec3 direction;

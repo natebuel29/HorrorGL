@@ -12,6 +12,8 @@ struct OpenGLContext {
 	GLuint lightSourceVAO;
 	GLuint VBO;
 	GLuint lightSourceVBO;
+	GLuint planeVAO;
+	GLuint planeVBO;
 	GLuint dirtTextureID;
 };
 
@@ -29,6 +31,7 @@ class Renderer
 		Camera m_Camera;
 		Shader shader;
 		Shader lightSourceShader;
+		Shader planeShader;
 		unsigned int texture;
 		unsigned int VAO;
 		int m_Width;

@@ -17,6 +17,9 @@ class Shader
 		Shader(const char* pathToVert, const char* pathToFrag);
 		void setMat4(const char* uniform, glm::mat4& target);
 		void setVec3(const char* uniform, glm::vec3& target);
+		void setVec3(const std::string& name, float x, float y, float z);
+		void setFloat(const std::string& name, float value);
+
 		void setInt(const char* uniform, int target);
 		unsigned int getProgramID();
 		void useProgram();

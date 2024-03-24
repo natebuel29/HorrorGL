@@ -63,5 +63,7 @@
   <ItemGroup>
     <None Include="resources\shaders\shader.vs" />
     <None Include="resources\shaders\shader.fs" />
+    <None Include="resources\shaders\planeShader.vs" />
+    <None Include="resources\shaders\planeShader.fs" />
   </ItemGroup>
 </Project>
