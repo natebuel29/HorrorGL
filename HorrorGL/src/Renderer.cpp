@@ -201,10 +201,10 @@ void Renderer::onUpdate()
 	planeShader.setVec3("lightColor", lightColor);
 	planeShader.setVec3("lightPos", lightPos);
 	planeShader.setVec3("viewPos", camPos);
-	planeShader.setVec3("material.ambient", 0.1f, 0.1f, 0.1f);
-	planeShader.setVec3("material.diffuse", 1.0f, 1.0f, 1.0f);
-	planeShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
-	planeShader.setFloat("material.shininess", 32.0f);
+	planeShader.setVec3("material.ambient", 0.05f, 0.05f, 0.05f);
+	planeShader.setVec3("material.diffuse", 0.5f, 0.5f, 0.5f);
+	planeShader.setVec3("material.specular", 0.2f, 0.2f, 0.2f);
+	planeShader.setFloat("material.shininess",64.0f);
 	model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(0.0f, -0.52f, 0.0f));
 	shader.setMat4("model", model);
